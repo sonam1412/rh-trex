@@ -11,7 +11,7 @@ spec:
       name: SNAPSHOT
       default: '{"components": [{"name":"test-app", "containerImage": "quay.io/example/repo:latest"}]}'
       type: string
-    - description: Namespace where the the container will be deployed.
+    - description: Namespace where the container will be deployed.
       name: NAMESPACE
       default: default
       type: string

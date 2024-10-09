@@ -7,7 +7,7 @@ spec:
   description: |
     An integration test which provisions an ephemeral namespace and deploys a container from a Konflux snapshot.
   params:
-    - description: Snapshot of the application
+    - description: Snapshot of an application
       name: SNAPSHOT
       default: '{"components": [{"name":"test-app", "containerImage": "quay.io/example/repo:latest"}]}'
       type: string

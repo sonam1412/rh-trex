@@ -9,7 +9,7 @@ RUN \
 RUN mkdir /usr/local/bin/rh-trex
 COPY \
     * \
-    /usr/local/bin/rh-trex
+    /usr/local/bin/rh-trex/
 
 EXPOSE 8000
 

@@ -45,5 +45,5 @@ spec:
         }
 
         # attempt to query pod
-        OUTPUT=$(oc run -i --tty --rm debug --image=curlimages/curl --restart=Never -- curl ${URL}:5001)
+        OUTPUT=$(oc run -i --tty --rm debug --image=curlimages/curl --restart=Never -- curl ${URL}:5000)
         assert_eq "$OUTPUT" "<h1>Hello from Flask & Dockerfile</h1>pod \"debug\" deleted " "not equal"

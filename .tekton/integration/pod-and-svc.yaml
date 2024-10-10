@@ -9,4 +9,4 @@ spec:
     - name:  rh-trex
       image: $COMPONENT_CONTAINER_IMAGE
       ports:
-        - containerPort: 5000
+        - containerPort: 8000

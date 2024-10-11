@@ -14,7 +14,7 @@ COPY \
 
 EXPOSE 8000
 
-ENTRYPOINT ["/usr/local/bin/rh-trex/serve"]
+ENTRYPOINT ["/bin/ls"]
 #ENTRYPOINT ["ab" , "http://google.com/"]
 
 LABEL name="rh-trex" \

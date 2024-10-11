@@ -7,15 +7,14 @@ RUN \
     microdnf clean all
 
 RUN mkdir /usr/local/bin/rh-trex 
-#&& ls -l /usr/local/bin && ls -l /usr/local/bin/rh-trex
 COPY \
     * \
     /usr/local/bin/rh-trex
 
 EXPOSE 8000
 
+#ENTRYPOINT ["/usr/local/bin/rh-trex", "serve"]
 ENTRYPOINT ["/bin/ls"]
-#ENTRYPOINT ["ab" , "http://google.com/"]
 
 LABEL name="rh-trex" \
       vendor="Red Hat" \

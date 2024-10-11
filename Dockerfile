@@ -21,4 +21,4 @@ LABEL name="rh-trex" \
       vendor="Red Hat" \
       version="0.0.1" \
       summary="rh-trex API" \
-      description="rh-trex API"
+      description="rh-trex API example"

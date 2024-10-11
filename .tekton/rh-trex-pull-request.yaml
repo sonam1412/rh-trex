@@ -14,7 +14,7 @@ metadata:
     appstudio.openshift.io/component: rh-trex
     pipelines.appstudio.openshift.io/type: build
   name: rh-trex-on-pull-request
-  namespace: rh-trex-tenant
+  namespace: somahesh-tenant
 spec:
   params:
   - name: dockerfile

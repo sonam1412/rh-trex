@@ -10,10 +10,10 @@ metadata:
       == "main"
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: rh-trex-app-sample
-    appstudio.openshift.io/component: rh-trex
+    appstudio.openshift.io/application: rh-trex-1
+    appstudio.openshift.io/component: rh-trex-nice
     pipelines.appstudio.openshift.io/type: build
-  name: rh-trex-on-push
+  name: rh-trex-nice-on-push
   namespace: somahesh-tenant
 spec:
   params:
@@ -22,7 +22,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/somahesh-tenant/rh-trex:{{revision}}
+    value: quay.io/redhat-user-workloads/somahesh-tenant/rh-trex-nice:{{revision}}
   - name: dockerfile
     value: Dockerfile
   pipelineSpec:

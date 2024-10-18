@@ -1,23 +1,10 @@
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.2-750.1697534106
+FROM quay.io/rycole/python:3.11-slim-buster
 
-RUN \
-    microdnf install -y \
-    util-linux \
-    && \
-    microdnf clean all
+WORKDIR /python-docker
 
-RUN mkdir /usr/local/bin/trex
-COPY \
-    * \
-    /usr/local/bin/trex
+COPY requirements.txt requirements.txt
+run pip3 install -r requirements.txt
 
-EXPOSE 8000
+COPY . .
 
-#ENTRYPOINT ["/usr/local/bin/trex", "serve"]
-ENTRYPOINT ["/bin/ls"]
-
-LABEL name="trex" \
-      vendor="Red Hat" \
-      version="0.0.1" \
-      summary="rh-trex API" \
-      description="rh-trex API"
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]

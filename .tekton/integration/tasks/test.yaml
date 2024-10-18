@@ -31,4 +31,17 @@ spec:
         oc get secret $SECRETNAME --template '{{.data.kubeconfig}}' | base64 -d > /kubeconfig
         export KUBECONFIG=/kubeconfig
 
+        oc expose --kubeconfig /tmp/cfg service trex
+        oc get --kubeconfig /tmp/cfg all
+        ROUTE_NAME=$(oc get --kubeconfig /tmp/cfg routes trex -o name --insecure-skip-tls-verify)
+        HOST=$(oc get --kubeconfig /tmp/cfg "${ROUTE_NAME}" -o jsonpath={.spec.host}  --insecure-skip-tls-verify)
+        echo "Found target host ${HOST} for app ${APPLICATION_NAME}"
+            
+        # Check the application endpoint
+        ENDPOINT_OUTPUT=$(curl -k http://${HOST}:5432)
+        echo -e "The endpoint outputs the following:\n ${ENDPOINT_OUTPUT}"
+        echo -e "Snapshot output:\n ${SNAPSHOT}"
+
         echo "Hello World!"
+
+        

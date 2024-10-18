@@ -13,7 +13,8 @@ COPY \
 
 EXPOSE 8000
 
-ENTRYPOINT ["/usr/local/bin/trex", "serve"]
+#ENTRYPOINT ["/usr/local/bin/trex", "serve"]
+ENTRYPOINT ["/bin/ls"]
 
 LABEL name="trex" \
       vendor="Red Hat" \

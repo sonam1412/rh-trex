@@ -6,18 +6,17 @@ RUN \
     && \
     microdnf clean all
 
-RUN mkdir /usr/local/bin/rh-trex 
+RUN mkdir /usr/local/bin/trex
 COPY \
     * \
-    /usr/local/bin/rh-trex
+    /usr/local/bin/trex
 
 EXPOSE 8000
 
-##ENTRYPOINT ["/usr/local/bin/rh-trex", "serve"]
-ENTRYPOINT ["/bin/ls"]
+ENTRYPOINT ["/usr/local/bin/trex", "serve"]
 
-LABEL name="rh-trex" \
+LABEL name="trex" \
       vendor="Red Hat" \
       version="0.0.1" \
       summary="rh-trex API" \
-      description="rh-trex API example"
+      description="rh-trex API"

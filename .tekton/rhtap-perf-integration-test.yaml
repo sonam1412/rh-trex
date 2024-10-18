@@ -134,9 +134,9 @@ spec:
             oc apply --kubeconfig /tmp/cfg  -f /tmp/templates/db-template.json
             oc apply --kubeconfig /tmp/cfg  -f /tmp/templates/secrets-template.json
             oc apply --kubeconfig /tmp/cfg  -f /tmp/templates/service-template.json
-            oc expose --kubeconfig /tmp/cfg service trex
+            oc expose --kubeconfig /tmp/cfg service rh-trex
             oc get --kubeconfig /tmp/cfg all
-            ROUTE_NAME=$(oc get --kubeconfig /tmp/cfg routes trex -o name --insecure-skip-tls-verify)
+            ROUTE_NAME=$(oc get --kubeconfig /tmp/cfg routes rh-trex -o name --insecure-skip-tls-verify)
             HOST=$(oc get --kubeconfig /tmp/cfg "${ROUTE_NAME}" -o jsonpath={.spec.host}  --insecure-skip-tls-verify)
             echo "Found target host ${HOST} for app ${APPLICATION_NAME}"
             

@@ -13,7 +13,7 @@ COPY \
 
 EXPOSE 8000
 
-#ENTRYPOINT ["/usr/local/bin/rh-trex", "serve"]
+##ENTRYPOINT ["/usr/local/bin/rh-trex", "serve"]
 ENTRYPOINT ["/bin/ls"]
 
 LABEL name="rh-trex" \

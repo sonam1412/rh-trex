@@ -31,11 +31,6 @@ spec:
         oc get secret $SECRETNAME --template '{{.data.kubeconfig}}' | base64 -d > /kubeconfig
         export KUBECONFIG=/kubeconfig
 
-        # Check the application endpoint
-        ENDPOINT_OUTPUT=$(curl -k http://${HOST}:5432)
-        echo -e "The endpoint outputs the following:\n ${ENDPOINT_OUTPUT}"
-        echo -e "Snapshot output:\n ${SNAPSHOT}"
-
         echo "Hello World!"
 
         

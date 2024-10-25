@@ -14,7 +14,7 @@ COPY . /local
 
 ENV PATH="/uhc/bin:/usr/lib/go-1.21/bin/:${PATH}"
 ENV GOPATH="/uhc"
-ENV GOBIN /usr/lib/go-1.21/bin/
+ENV  /usr/lib/go-1.21/bin/
 ENV CGO_ENABLED=0
 
 # these git and go flags to avoid self signed certificate errors

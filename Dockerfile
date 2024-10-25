@@ -14,8 +14,8 @@ COPY \
 EXPOSE 8000
 
 #ENTRYPOINT ["/usr/local/bin/trex", "serve"]
-ENTRYPOINT ["/bin/ls"]
-#ENTRYPOINT ["python3", "-m", "http.server", "8000"]
+#ENTRYPOINT ["/bin/ls"]
+ENTRYPOINT ["python3", "-m", "http.server", "8000"]
 
 LABEL name="trex" \
       vendor="Red Hat" \

@@ -11,7 +11,7 @@ COPY \
     * \
     /usr/local/bin/trex
 
-EXPOSE 8000
+EXPOSE 8080
 
 #ENTRYPOINT ["/usr/local/bin/trex", "serve"]
 ENTRYPOINT ["/bin/ls"]

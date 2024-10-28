@@ -34,6 +34,7 @@ spec:
         echo "Hello World!"
 
         oc get --kubeconfig /kubeconfig all
+        oc get --kubeconfig /kubeconfig routes
         ROUTE_NAME=$(oc get --kubeconfig /kubeconfig routes trex -o name --insecure-skip-tls-verify)
         HOST=$(oc get --kubeconfig /kubeconfig "${ROUTE_NAME}" -o jsonpath={.spec.host}  --insecure-skip-tls-verify)
         echo "Found target host ${HOST} for app ${APPLICATION_NAME}"

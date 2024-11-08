@@ -138,6 +138,7 @@ spec:
                   key: client_secret                      
           script: |
             #!/usr/bin/env bash
+            echo "Try deploy"
             cat <<< "$KUBECONFIG_VALUE" > /tmp/cfg
             dnf -y install jq git
             export KUBECONFIG=/tmp/cfg

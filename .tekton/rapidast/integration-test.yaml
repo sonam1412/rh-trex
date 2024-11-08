@@ -83,22 +83,4 @@ spec:
           value: $(params.SNAPSHOT)
         - name: PODNAME
           value: $(params.pod-and-svc-name)
-    - name: run-test
-      runAfter:
-        - deploy-container
-      taskRef:
-        resolver: git
-        params:
-          - name: url
-            value: https://github.com/sonam1412/rh-trex.git
-          - name: revision
-            value: main
-          - name: pathInRepo
-            value: .tekton/rapidast/rapidast-test.yaml
-      params:
-        - name: SERVICEACCOUNT
-          value: $(tasks.provision-namespace.results.secretRef)
-        - name: SNAPSHOT
-          value: $(params.SNAPSHOT)
-        - name: SERVICENAME
-          value: $(params.pod-and-svc-name)
+

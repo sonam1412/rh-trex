@@ -86,6 +86,15 @@ spec:
     - name: run-test
       runAfter:
         - deploy-container
+      taskRef:
+        resolver: git
+        params:
+          - name: url
+            value: https://github.com/sonam1412/rh-trex.git
+          - name: revision
+            value: main
+          - name: pathInRepo
+            value: .tekton/rapidast/rapidast-test.yaml
       params:
         - name: SERVICEACCOUNT
           value: $(tasks.provision-namespace.results.secretRef)
@@ -93,30 +102,3 @@ spec:
           value: $(params.SNAPSHOT)
         - name: SERVICENAME
           value: $(params.pod-and-svc-name)
-      steps:     
-        - name: test
-          image: registry.redhat.io/openshift4/ose-cli:latest
-          env:
-            - name: COMPONENT_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.labels['appstudio.openshift.io/component']
-            - name: SNAPSHOT
-              value: $(params.SNAPSHOT)
-            - name: SECRETNAME
-              value: $(params.serviceaccount-secret)
-            - name: HOSTURL
-              value: $(params.SERVICENAME)
-          script: |
-            #!/bin/bash
-            set -ex
-            set -o pipefail
-       
-            oc get secret $SECRETNAME --template '{{.data.kubeconfig}}' | base64 -d > /kubeconfig
-            export KUBECONFIG=/kubeconfig
-          
-            oc whoami
-
-            echo "Hello World!"
-            echo "Host URL: ${HOSTURL}"
-      

@@ -4,14 +4,16 @@ metadata:
   name: deploy-container
 spec:
   params:
-    - name: serviceaccount-secret
+    - name: SERVICEACCOUNT
       description: "Secret to service account that can access the ephemeral namespace"
     - name: SNAPSHOT
       description: The JSON string of the Snapshot under test
-    - name: pod-name
+    - name: PODNAME
+      description: Name of the pod and service to be tested
   steps:
-    - name: echo
-      image: registry.redhat.io/openshift4/ose-cli:4.13@sha256:73df37794ffff7de1101016c23dc623e4990810390ebdabcbbfa065214352c7c
+    - name: deploy-container
+      image: registry.redhat.io/openshift4/ose-cli:latest
+      imagePullPolicy: Always
       env:
         - name: COMPONENT_NAME
           valueFrom:
@@ -20,9 +22,9 @@ spec:
         - name: SNAPSHOT
           value: $(params.SNAPSHOT)
         - name: SECRETNAME
-          value: $(params.serviceaccount-secret)
+          value: $(params.SERVICEACCOUNT)
         - name: PODNAME
-          value: $(params.pod-name)
+          value: $(params.PODNAME)
       script: |
         #!/bin/bash
         set -ex

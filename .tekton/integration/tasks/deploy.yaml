@@ -4,11 +4,11 @@ metadata:
   name: deploy-container
 spec:
   params:
-    - name: SERVICEACCOUNT
+    - name: serviceaccount-secret
       description: "Secret to service account that can access the ephemeral namespace"
     - name: SNAPSHOT
       description: The JSON string of the Snapshot under test
-    - name: PODNAME
+    - name: pod-name
       description: Name of the pod and service to be tested
   steps:
     - name: deploy-container
@@ -22,9 +22,9 @@ spec:
         - name: SNAPSHOT
           value: $(params.SNAPSHOT)
         - name: SECRETNAME
-          value: $(params.SERVICEACCOUNT)
+          value: $(params.serviceaccount-secret)
         - name: PODNAME
-          value: $(params.PODNAME)
+          value: $(params.pod-name)
       script: |
         #!/bin/bash
         set -ex

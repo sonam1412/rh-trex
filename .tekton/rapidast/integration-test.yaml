@@ -64,4 +64,23 @@ spec:
           value: $(context.pipelineRun.name)
         - name: PIPELINERUN_UID
           value: $(context.pipelineRun.uid)
-    
+    - name: deploy-container
+      runAfter:
+        - provision-namespace
+      taskRef:
+        resolver: git
+        params:
+          - name: url
+            value: https://github.com/sonam1412/rh-trex.git
+          - name: revision
+            value: main
+          - name: pathInRepo
+            value: .tekton/integration/tasks/deploy.yaml
+      params:
+        - name: serviceaccount-secret
+          value: $(tasks.provision-namespace.results.secretRef)
+        - name: SNAPSHOT
+          value: $(params.SNAPSHOT)
+        - name: pod-name
+          value: $(params.pod-and-svc-name)
+

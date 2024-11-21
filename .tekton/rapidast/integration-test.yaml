@@ -71,7 +71,7 @@ spec:
         resolver: git
         params:
           - name: url
-            value: https://github.com/sonam1412/rh-trex.git
+            value: https://github.com/jencull/rh-trex.git
           - name: revision
             value: main
           - name: pathInRepo
@@ -83,4 +83,22 @@ spec:
           value: $(params.SNAPSHOT)
         - name: pod-name
           value: $(params.pod-and-svc-name)
-
+    - name: run-test
+      runAfter:
+        - deploy-container
+      taskRef:
+        resolver: git
+        params:
+          - name: url
+            value: https://github.com/sonam1412/rh-trex.git
+          - name: revision
+            value: main
+          - name: pathInRepo
+            value: .tekton/rapidast/rapidast-test.yaml
+      params:
+        - name: serviceaccount-secret
+          value: $(tasks.provision-namespace.results.secretRef)
+        - name: SNAPSHOT
+          value: $(params.SNAPSHOT)
+        - name: svc-name
+          value: $(params.pod-and-svc-name)

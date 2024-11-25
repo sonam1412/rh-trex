@@ -16,6 +16,10 @@ spec:
       name: EXPECTED_OUTPUT
       default: ""
       type: string
+    - description: Name of the pod and service to be tested (oc expose gives the service the same name as the pod)
+      name: pod-and-svc-name
+      default: trex
+      type: string
   tasks:
     - name: parse-metadata
       taskRef:

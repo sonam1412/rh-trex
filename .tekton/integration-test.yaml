@@ -54,9 +54,11 @@ spec:
             
             echo "SNAPSHOT: $SNAPSHOT"
             # Set Vars
-            TARGET_COMPONENT_NAME="rh-trex"
-            REPO_URL=$(echo $SNAPSHOT | jq -r '.components[] | select(.name == "rh-trex").source.git.url')
-            REPO_COMMIT=$(echo $SNAPSHOT | jq -r '.components[] | select(.name == "rh-trex").source.git.revision')
+            TARGET_COMPONENT_NAME="trex-dast"
+            //REPO_URL=$(echo $SNAPSHOT | jq -r '.components[] | select(.name == "rh-trex").source.git.url')
+            REPO_URL=https://github.com/sonam1412/rh-trex.git
+            //REPO_COMMIT=$(echo $SNAPSHOT | jq -r '.components[] | select(.name == "rh-trex").source.git.revision')
+            REPO_COMMIT=12ae7aabbbb246f7301a267bffd3ba753c489006
             test_output_file=${PWD}/test_output.json
 
             # Log Vars for Tracibility

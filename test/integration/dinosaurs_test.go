@@ -10,6 +10,7 @@ import (
 
 	"github.com/openshift-online/rh-trex/pkg/api"
 	"github.com/openshift-online/rh-trex/pkg/dao"
+	"github.com/openshift-online/rh-trex/pkg/services"
 
 	. "github.com/onsi/gomega"
 	"gopkg.in/resty.v1"
@@ -239,7 +240,7 @@ func TestUpdateDinosaurWithRacingRequests(t *testing.T) {
 	}, 5*time.Second, 1*time.Second).Should(Succeed())
 }
 
-/*func TestUpdateDinosaurWithRacingRequests_WithoutLock(t *testing.T) {
+func TestUpdateDinosaurWithRacingRequests_WithoutLock(t *testing.T) {
 	// we disable the advisory lock and try to update the dinosaurs
 	services.DisableAdvisoryLock = true
 
@@ -288,4 +289,4 @@ func TestUpdateDinosaurWithRacingRequests(t *testing.T) {
 	// the dinosaur patch request is not protected by the advisory lock, so there will likely be more then one update captured
 	t.Logf("Updated Count: %v\n", updatedCount)
 	Expect(updatedCount > 1).To(BeTrue())
-}*/
+}

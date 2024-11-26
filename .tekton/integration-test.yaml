@@ -73,6 +73,8 @@ spec:
         - name: pod-name
           value: $(params.pod-and-svc-name)
     - name: integration-test
+      runAfter:
+        - deploy-container
       description: Set up DB, run integration tests, and read results
       params:
         - name: SNAPSHOT

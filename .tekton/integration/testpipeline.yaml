@@ -20,16 +20,6 @@ spec:
       default: trex
       type: string
   tasks:
-    - name: hello-world
-      taskRef:
-        resolver: git
-        params:
-          - name: url
-            value: https://github.com/sonam1412/rh-trex.git
-          - name: revision
-            value: main
-          - name: pathInRepo
-            value: .tekton/integration/tasks/sample-task.yaml
     - name: provision-namespace
       taskRef:
         resolver: git
@@ -65,24 +55,7 @@ spec:
         - name: SNAPSHOT
           value: $(params.SNAPSHOT)
         - name: pod-name
-          value: $(params.pod-and-svc-name)
-      taskSpec:
-        params:
-          - name: open-port
-        sidecars:
-          - name: port-forward
-            image: registry.redhat.io/openshift4/ose-cli:latest
-            env:       
-              - name: KUBECONFIG_VALUE
-                valueFrom:
-                  secretKeyRef:
-                    name: "$(tasks.provision-env.results.secretRef)"
-                    key: kubeconfig          
-            script: |
-              #!/usr/bin/env bash
-              cat <<< "$KUBECONFIG_VALUE" > /tmp/cfg
-              export KUBECONFIG=/tmp/cfg
-              oc port-forward --kubeconfig /tmp/cfg svc/trex 8000:8080
+          value: $(params.pod-and-svc-name)      
     - name: run-test
       runAfter:
         - deploy-container

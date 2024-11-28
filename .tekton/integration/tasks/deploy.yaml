@@ -42,4 +42,4 @@ spec:
         CLUSTER_IP=$(oc expose pod $PODNAME -o jsonpath={.spec.clusterIP}) #expose pod port
         sleep 5 #make sure the pod is running
         oc run -i --tty --rm debug --image=curlimages/curl --restart=Never -- curl ${PODNAME}:8000
-        oc describe podname ${PODNAME}
+        oc describe pod ${PODNAME}

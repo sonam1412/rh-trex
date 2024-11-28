@@ -43,8 +43,12 @@ spec:
         sleep 5 #make sure the pod is running
         oc run -i --tty --rm debug --image=curlimages/curl --restart=Never -- curl ${PODNAME}:8000
 
-        oc port-forward --kubeconfig /kubeconfig svc/trex 8000:8000
+        oc get pods
+
+        oc describe pod ${PODNAME}
+
+        oc port-forward --kubeconfig /kubeconfig ${PODNAME} 8000:8000
 
         curl -X GET -s http://${CLUSTER_IP}:8080 | python -m json.tool
 
-        oc describe pod ${PODNAME}
+        

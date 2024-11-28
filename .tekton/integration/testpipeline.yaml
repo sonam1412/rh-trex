@@ -82,7 +82,7 @@ spec:
               #!/usr/bin/env bash
               cat <<< "$KUBECONFIG_VALUE" > /tmp/cfg
               export KUBECONFIG=/tmp/cfg
-              oc port-forward --kubeconfig /tmp/cfg svc/trex 8080:8000
+              oc port-forward --kubeconfig /tmp/cfg svc/trex 8000:8080
     - name: run-test
       runAfter:
         - deploy-container

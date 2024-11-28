@@ -66,6 +66,25 @@ spec:
           value: $(params.SNAPSHOT)
         - name: pod-name
           value: $(params.pod-and-svc-name)
+      taskSpec:
+        params:
+          - name: open-port
+        sidecars:
+          - name: port-forward
+            image: registry.redhat.io/openshift4/ose-cli:latest
+            env:       
+              - name: KUBECONFIG_VALUE
+                valueFrom:
+                  secretKeyRef:
+                    name: "$(tasks.provision-env.results.secretRef)"
+                    key: kubeconfig          
+            ports:
+              - containerPort: 8080
+            script: |
+              #!/usr/bin/env bash
+              cat <<< "$KUBECONFIG_VALUE" > /tmp/cfg
+              export KUBECONFIG=/tmp/cfg
+              oc port-forward --kubeconfig /tmp/cfg svc/trex 8080:8000
     - name: run-test
       runAfter:
         - deploy-container

@@ -47,6 +47,8 @@ spec:
 
         oc describe pod ${PODNAME}
 
+        oc port-forward --kubeconfig /kubeconfig ${PODNAME} 8000:8080
+
         curl -X GET -s http://${CLUSTER_IP}:8000 | python -m json.tool
 
         

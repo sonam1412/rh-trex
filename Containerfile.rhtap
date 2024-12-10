@@ -1,5 +1,6 @@
 FROM registry.access.redhat.com/ubi9/go-toolset:1.21.13-2.1729776560 AS builder
-RUN dnf -y install golang
+#RUN dnf -y install golang
+RUN which go
 
 ENV SOURCE_DIR=/rh-trex
 WORKDIR $SOURCE_DIR

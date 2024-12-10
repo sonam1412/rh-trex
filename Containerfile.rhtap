@@ -6,6 +6,7 @@ ENV SOURCE_DIR=/rh-trex
 WORKDIR $SOURCE_DIR
 COPY . $SOURCE_DIR
 
+ENV GOPATH=/usr/bin/go
 ENV GOFLAGS=""
 RUN make binary
 RUN pwd

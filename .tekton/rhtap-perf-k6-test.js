@@ -5,7 +5,7 @@ import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.2/index.js';
 
 const token = open('/tmp/token');
-const BASE_URL = '--insecure ' + `${__ENV.BASE_URL}`;
+const BASE_URL = `${__ENV.BASE_URL}`;
 const listTrend = new Trend('List_API');
 const postTrend = new Trend('POST_API');
 const getTrend = new Trend('GET_ID_API');
@@ -59,7 +59,6 @@ export default function () {
 
         // Request No. 1: 
         {
-            console.log(BASE_URL);    
             let url = BASE_URL + `/api/rh-trex/v1/dinosaurs?page=${page}&size=${size}&search=${search}&orderBy=${orderBy}&fields=${fields}`;
             let request = http.get(url,options);
 

@@ -59,6 +59,7 @@ export default function () {
 
         // Request No. 1: 
         {
+            console.log(BASE_URL);    
             let url = BASE_URL + `/api/rh-trex/v1/dinosaurs?page=${page}&size=${size}&search=${search}&orderBy=${orderBy}&fields=${fields}`;
             let request = http.get(url,options);
 

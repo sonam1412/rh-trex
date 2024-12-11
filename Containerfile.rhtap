@@ -6,10 +6,10 @@ ENV SOURCE_DIR=/rh-trex
 WORKDIR $SOURCE_DIR
 COPY . $SOURCE_DIR
 
-ENV GOPATH=/usr/bin/go
-RUN ls -l /usr/bin/go/pkg
-ENV GOMODCACHE=/usr/bin/go/pkg/mod
-ENV GOFLAGS=""
+ENV GOPATH=/opt/app-root/src/go
+#RUN ls -l /usr/bin/go/pkg
+#ENV GOMODCACHE=/usr/bin/go/pkg/mod
+ENV GOFLAGS="-buildvcs=false"
 RUN make binary
 RUN pwd
 

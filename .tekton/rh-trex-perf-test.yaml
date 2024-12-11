@@ -236,7 +236,7 @@ spec:
             #!/usr/bin/env bash
             cat <<< "$KUBECONFIG_VALUE" > /tmp/cfg
             export KUBECONFIG=/tmp/cfg
-            oc port-forward --kubeconfig /tmp/cfg svc/trex 8000:8080    
+            oc port-forward --kubeconfig /tmp/cfg svc/trex 8000:8000    
         steps:
         - image: grafana/k6
           name: run-perf

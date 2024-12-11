@@ -252,7 +252,7 @@ spec:
             chmod +x /tmp/ocm
             /tmp/ocm login --token=${OCM_TOKEN} --url=https://127.0.0.1:8000 --debug
             export BASE_URL=https://127.0.0.1:8000
-            wget -O /tmp/script.js --no-check-certificate https://raw.githubusercontent.com/openshift-online/rh-trex/refs/heads/main/.tekton/rhtap-perf-k6-test.js
+            wget -O /tmp/script.js --insecure https://raw.githubusercontent.com/openshift-online/rh-trex/refs/heads/main/.tekton/rhtap-perf-k6-test.js
             echo -n `/tmp/ocm token`>/tmp/token
             k6 run /tmp/script.js
             cat /workspace/output.json

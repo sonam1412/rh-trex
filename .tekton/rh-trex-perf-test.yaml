@@ -199,6 +199,8 @@ spec:
             else
               echo -n '$(params.HR_REG_VAR)' | tee $(results.reg_var.path)
             fi
+    - name: run-test
+      taskSpec:
         sidecars:
         - name: port-forward
           image: registry.redhat.io/openshift4/ose-cli:latest
@@ -215,17 +217,22 @@ spec:
             cat <<< "$KUBECONFIG_VALUE" > /tmp/cfg
             export KUBECONFIG=/tmp/cfg
             oc port-forward --kubeconfig /tmp/cfg svc/trex 8000:8000
-            
-            wget -O /tmp/ocm https://github.com/openshift-online/ocm-cli/releases/download/v0.1.65/ocm-linux-amd64
-            chmod +x /tmp/ocm
-            cat /tmp/ocm
-            export BASE_URL="https://127.0.0.1:8000"
-            echo "URL: $(BASE_URL}"
-            echo "OCM Token: ${OCM_TOKEN}"
-            echo "CLIENT ID: ${CLIENT_ID}"
-            echo "CLIENT Secret: {CLIENT_SEC}"
-            /tmp/ocm login --token=${OCM_TOKEN} --url="${BASE_URL}" --debug
-            curl -s -v "${BASE_URL}"
+        steps:
+          - name: get-url 
+            env:
+            - name: OCM_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: ocm
+                  key: ocmtoken          
+            script: |
+              wget -O /tmp/ocm https://github.com/openshift-online/ocm-cli/releases/download/v0.1.65/ocm-linux-amd64
+              chmod +x /tmp/ocm
+              cat /tmp/ocm
+              export BASE_URL="https://127.0.0.1:8000"
+              echo "URL: $(BASE_URL}"
+              /tmp/ocm login --token=${OCM_TOKEN} --url="${BASE_URL}" --debug
+              curl -s -v "${BASE_URL}"
   finally:
     - name: cleanup  
       params:

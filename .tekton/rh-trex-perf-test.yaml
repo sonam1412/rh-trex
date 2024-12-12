@@ -218,9 +218,14 @@ spec:
             
             wget -O /tmp/ocm https://github.com/openshift-online/ocm-cli/releases/download/v0.1.65/ocm-linux-amd64
             chmod +x /tmp/ocm
-            /tmp/ocm login --token=${OCM_TOKEN} --url=https://127.0.0.1:8000 --debug
+            cat /tmp/ocm
             export BASE_URL="https://127.0.0.1:8000"
-            curl -s -v $BASE_URL
+            echo "URL: $(BASE_URL}"
+            echo "OCM Token: ${OCM_TOKEN}"
+            echo "CLIENT ID: ${CLIENT_ID}"
+            echo "CLIENT Secret: {CLIENT_SEC}"
+            /tmp/ocm login --token=${OCM_TOKEN} --url="${BASE_URL}" --debug
+            curl -s -v "${BASE_URL}"
   finally:
     - name: cleanup  
       params:

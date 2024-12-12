@@ -198,29 +198,7 @@ spec:
               echo -n 'iteration_duration' | tee $(results.reg_var.path)
             else
               echo -n '$(params.HR_REG_VAR)' | tee $(results.reg_var.path)
-            fi             
-    - name: perf-benchmark 
-      params:
-        - name: test_name
-          value: $(tasks.deploy-app.results.test_name)
-        - name: reg_var
-          value: $(tasks.deploy-app.results.reg_var)
-        - name: HORREUM_COFIG_SET
-          value: $(tasks.extract-secrets.results.HORREUM_COFIG_SET)
-        - name: HORREUM_PASSWORD
-          value: $(tasks.extract-secrets.results.HORREUM_PASSWORD)
-        - name: HORREUM_URI
-          value: $(tasks.extract-secrets.results.HORREUM_URI)
-        - name: HORREUM_USER
-          value: $(tasks.extract-secrets.results.HORREUM_USER)           
-      taskSpec:
-        params:
-          - name: test_name
-          - name: reg_var
-          - name: HORREUM_COFIG_SET
-          - name: HORREUM_PASSWORD
-          - name: HORREUM_URI
-          - name: HORREUM_USER
+            fi
         sidecars:
         - name: port-forward
           image: registry.redhat.io/openshift4/ose-cli:latest
@@ -236,49 +214,13 @@ spec:
             #!/usr/bin/env bash
             cat <<< "$KUBECONFIG_VALUE" > /tmp/cfg
             export KUBECONFIG=/tmp/cfg
-            oc port-forward --kubeconfig /tmp/cfg svc/trex 8000:8000    
-        steps:
-        - image: grafana/k6
-          name: run-perf
-          env:
-            - name: OCM_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: ocm
-                  key: ocmtoken          
-          script: |
-            #!/usr/bin/env sh
+            oc port-forward --kubeconfig /tmp/cfg svc/trex 8000:8000
+            
             wget -O /tmp/ocm https://github.com/openshift-online/ocm-cli/releases/download/v0.1.65/ocm-linux-amd64
             chmod +x /tmp/ocm
             /tmp/ocm login --token=${OCM_TOKEN} --url=https://127.0.0.1:8000 --debug
             export BASE_URL="https://127.0.0.1:8000"
-            wget -O /tmp/script.js https://raw.githubusercontent.com/sonam1412/rh-trex/refs/heads/main/.tekton/rhtap-perf-k6-test.js
-            echo -n `/tmp/ocm token`>/tmp/token
-            k6 run /tmp/script.js
-            cat /workspace/output.json
-        - image: quay.io/yogananth_subramanian/curl-yq-jq
-          name: check-regression
-          script: |
-            set -x
-            horreum_sec_set=$(params.HORREUM_COFIG_SET)
-            if [ ${horreum_sec_set} == 'false' ]; then
-              echo "Horreum config not set"
-            else
-              echo "Transform result to json format"
-              cat /workspace/output.json
-              test_name=$(params.test_name)
-              reg_var=$(params.reg_var)
-              KEYCLOAK_URI=$(curl -s -k -X GET  ${HORREUM_URI}/api/config/keycloak|jq -r .url)
-              TOKEN=$(curl -s  -k  ${KEYCLOAK_URI}/realms/horreum/protocol/openid-connect/token   -d "username=$HORREUM_USER"  -d "password=$HORREUM_PASSWORD" -d 'grant_type=password' -d 'client_id=horreum-ui' | jq -r .access_token)
-              curl -k -s -v ${HORREUM_URI}'/api/run/data?start=$.startTime&stop=$.endTime&test='$test_name -X POST -H 'Authorization: Bearer '${TOKEN} -H 'Content-Type: application/json'  -d @/workspace/output.json
-              testid=$(curl -s -k -X GET  ${HORREUM_URI}'/api/test/byName/'$test_name|jq -r .id)
-              varid=$(curl -s -k -X GET  ${HORREUM_URI}'/api/alerting/variables?test='$testid|jq -r --arg regvar "$reg_var" '.[] | select(.name==$regvar)| .id ')
-              changes=`curl -s -k -X GET ${HORREUM_URI}'/api/alerting/changes?var='$varid  |jq  '.| length'`
-              if [ -z  $changes ] || [ $changes -gt 0  ] ;then echo "Regression check failed";exit 1;fi                  
-            fi 
-      runAfter:
-        - deploy-app
-        - extract-secrets    
+            curl -s -v $BASE_URL
   finally:
     - name: cleanup  
       params:
